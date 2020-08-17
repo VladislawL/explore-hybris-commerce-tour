@@ -1,29 +1,37 @@
 # ImpEx for Importing Tour and dates for a band
- 
+
 # Macros / Replacement Parameter definitions
-$productCatalog=concertoursProductCatalog
-$supercategories=supercategories(code, $catalogVersion)
-$baseProduct=baseProduct(code,$catalogVersion)
-$approved=approvalstatus(code)[default='approved']
-$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
- 
+$productCatalog = concertoursProductCatalog
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default='approved']
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Online'])[unique=true, default=$productCatalog:Online]
+
 # Product catalog
-INSERT_UPDATE Catalog;id[unique=true]
-;$productCatalog
- 
+INSERT_UPDATE Catalog; id[unique = true]
+                     ; $productCatalog
+
 # Product cataog version
-INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;languages(isoCode);readPrincipals(uid)
-;$productCatalog;Online;true;en;employeegroup
- 
+INSERT_UPDATE CatalogVersion; catalog(id)[unique = true]; version[unique = true]; active; languages(isoCode); readPrincipals(uid)
+                            ; $productCatalog           ; Online                ; true  ; en                ; employeegroup
+
 # Insert Products
-INSERT_UPDATE Product;code[unique=true];name;band(code);$supercategories;manufacturerName;manufacturerAID;unit(code);ean;variantType(code);$catalogVersion;$approved
-;201701;The Grand Little x Tour;A001;;x;y;pieces;;Concert
- 
+INSERT_UPDATE Product; code[unique = true]; name                    ; band(code); $supercategories; manufacturerName; manufacturerAID; unit(code); ean; variantType(code); $catalogVersion; $approved
+                     ; 201701             ; The Grand Little x Tour ; A001      ;                 ; x               ; y              ; pieces    ;    ; Concert
+
+INSERT_UPDATE Venue; code[unique = true]; name[lang = en]       ; location         ; description
+                   ; A001               ; Electric Ballroom     ; London, UK       ; The Electric Ballroom is a 1,500 capacity performance venue (primarily for rock bands)
+                   ; A002               ; Muffatwerke           ; Munich, Germany  ;
+                   ; A003               ; Rialto Theatre        ; Montreal, Canada ;
+                   ; A004               ; Gliwice Arena         ; Gliwice, Poland  ; Gliwice Arena is a multi-purpose indoor arena in Gliwice, Poland. It provides 13,752 seats
+                   ; A005               ; Boulder Theater       ; Boulder, USA     ;
+                   ; A006               ; House of Blues Boston ; Boston, USA      ;
+
 # Insert Products
-INSERT_UPDATE Concert;code[unique=true];name;date[dateformat=dd.MM.yyyy];venue;concertType(code);baseProduct(code);$catalogVersion;$approved
-;20170101;Grand Tour - Munich;03.02.2017;"hybris Munich, Germany";openair;201701;
-;20170102;Grand Tour - London;21.03.2017;"hybris London, UK";openair;201701;
-;20170103;Grand Tour - Montreal;15.06.2017;"hybris Montreal, Canada";indoor;201701;
-;20170104;Grand Tour - Gliwice;04.11.2017;"hybris Gliwice, Poland";indoor;201701;
-;20170105;Grand Tour - Boulder;07.01.2018;"hybris Boulder, USA";indoor;201701;
-;20170106;Grand Tour - Boston;;"hybris Boston, USA";;201701;
+INSERT_UPDATE Concert; code[unique = true]; name                  ; date[dateformat = dd.MM.yyyy]; venue(code); concertType(code); baseProduct(code); $catalogVersion; $approved
+                     ; 20170101           ; Grand Tour - Munich   ; 03.02.2017                   ; A001       ; openair          ; 201701           ;
+                     ; 20170102           ; Grand Tour - London   ; 21.03.2017                   ; A002       ; openair          ; 201701           ;
+                     ; 20170103           ; Grand Tour - Montreal ; 15.06.2017                   ; A003       ; indoor           ; 201701           ;
+                     ; 20170104           ; Grand Tour - Gliwice  ; 04.11.2017                   ; A004       ; indoor           ; 201701           ;
+                     ; 20170105           ; Grand Tour - Boulder  ; 07.01.2018                   ; A005       ; indoor           ; 201701           ;
+                     ; 20170106           ; Grand Tour - Boston   ;                              ; A006       ;                  ; 201701           ;
