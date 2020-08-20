@@ -73,6 +73,10 @@
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
 	  -->
 
+    <bean id="concerttourEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
+        <property name="modelService" ref="modelService" />
+    </bean>
+
     <bean id="concertDaysUntilAttributeHandler" class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
 
     <alias name = "defaultBandFacade" alias = "bandFacade" />
