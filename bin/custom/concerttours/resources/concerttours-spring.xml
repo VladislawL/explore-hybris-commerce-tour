@@ -73,6 +73,8 @@
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
 	  -->
 
+    <bean id="concertDaysUntilAttributeHandler" class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
+
     <alias name = "defaultBandFacade" alias = "bandFacade" />
     <bean id = "defaultBandFacade" class ="concerttours.facades.impl.DefaultBandFacade" >
         <property name = "bandService" ref = "bandService" />
