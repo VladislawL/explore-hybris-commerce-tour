@@ -1,4 +1,6 @@
 package concerttours.facades.impl;
+import concerttours.data.VenueData;
+import concerttours.model.VenueModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.product.ProductService;
 import de.hybris.platform.variants.model.VariantProductModel;
@@ -38,7 +40,7 @@ public class DefaultTourFacade implements TourFacade
                     final ConcertSummaryData summary = new ConcertSummaryData();
                     summary.setId(concert.getCode());
                     summary.setDate(concert.getDate());
-                    summary.setVenue(concert.getVenue().getName());
+                    summary.setVenue(convertVenueModelToVenueData(concert.getVenue()));
                     summary.setType(concert.getConcertType() == ConcertType.OPENAIR ? "Outdoors" : "Indoors");
                     summary.setCountDown(concert.getDaysUntil());
                     concerts.add(summary);
@@ -57,5 +59,17 @@ public class DefaultTourFacade implements TourFacade
     public void setProductService(final ProductService productService)
     {
         this.productService = productService;
+    }
+
+    private VenueData convertVenueModelToVenueData(VenueModel venueModel)
+    {
+        VenueData venueData = new VenueData();
+
+        venueData.setId(venueModel.getCode());
+        venueData.setName(venueModel.getName());
+        venueData.setLocation(venueModel.getLocation());
+        venueData.setDescription(venueModel.getDescription());
+
+        return venueData;
     }
 }
