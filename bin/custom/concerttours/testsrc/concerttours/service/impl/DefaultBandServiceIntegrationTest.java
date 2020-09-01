@@ -86,6 +86,7 @@ public class DefaultBandServiceIntegrationTest extends ServicelayerTest
         createCoreData();
         importCsv("/impex/concerttours-bands.impex", "utf-8");
         importCsv("/impex/concerttours-yBandTour.impex", "utf-8");
+        importCsv("/impex/concerttours-bands-en.impex", "utf-8");
         final BandModel band = bandService.getBandForCode("A001");
         assertNotNull("No band found", band);
         final Set<ProductModel> tours = band.getTours();
