@@ -2,6 +2,7 @@ package concerttours.facades.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import de.hybris.bootstrap.annotations.IntegrationTest;
+import de.hybris.platform.impex.jalo.ImpExException;
 import de.hybris.platform.servicelayer.ServicelayerTransactionalTest;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.model.ModelService;
@@ -39,14 +40,14 @@ public class DefaultBandFacadeIntegrationTest extends ServicelayerTransactionalT
     /** Albums sold by test band. */
     private static final Long ALBUMS_SOLD = Long.valueOf(10L);
     @Before
-    public void setUp()
-    {
+    public void setUp() throws ImpExException {
         try {
             Thread.sleep(TimeUnit.SECONDS.toMillis(1));
             new JdbcTemplate(Registry.getCurrentTenant().getDataSource()).execute("CHECKPOINT");
             Thread.sleep(TimeUnit.SECONDS.toMillis(1));
         } catch (InterruptedException exc) {}
         // This instance of a BandModel will be used by the tests
+        importCsv("/impex/essentialdata-mediaformats.impex", "UTF-8");
         bandModel = modelService.create(BandModel.class);
         bandModel.setCode(BAND_CODE);
         bandModel.setName(BAND_NAME);
