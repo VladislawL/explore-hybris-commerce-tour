@@ -10,7 +10,6 @@ import concerttours.model.VenueModel;
 import concerttours.service.VenueService;
 import de.hybris.platform.servicelayer.config.ConfigurationService;
 import de.hybris.platform.servicelayer.model.ModelService;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.Locale;
 
@@ -20,29 +19,23 @@ public class DefaultVenueService implements VenueService {
 
     private static final String APIKEY_PROPERTY = "venue.service.apikey";
     private static final String API_URL = "https://api.songkick.com/api/3.0/search/venues.json?query=Minsk&apikey=%s&per_page=100";
-    private static final String API_ACCESS_EXCEPTION_MESSAGE = "Unable to access api endpoint";
 
     @Override
-    public void updateVenues() throws UnirestException {
+    public void updateVenues() throws UnirestException, JsonProcessingException {
         String apikey = configurationService.getConfiguration().getString(APIKEY_PROPERTY);
         HttpResponse<String> response = Unirest.get(String.format(API_URL, apikey)).asString();
-        if (response.getStatus() == 200) {
-            try {
-                updateVenues(response);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new ResourceAccessException(API_ACCESS_EXCEPTION_MESSAGE);
-        }
+
+        updateVenues(response);
     }
 
     private void updateVenues(HttpResponse<String> response) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+
         JsonNode venues = mapper.readTree(response.getBody())
                 .path("resultsPage")
                 .path("results")
                 .path("venue");
+
         for (JsonNode jsonVenue : venues) {
             VenueModel venueModel = createVenueModelFromJson(jsonVenue);
             modelService.save(venueModel);
