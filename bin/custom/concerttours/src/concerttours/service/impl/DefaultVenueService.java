@@ -13,6 +13,7 @@ import de.hybris.platform.servicelayer.config.ConfigurationService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import org.springframework.web.client.ResourceAccessException;
 
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,7 +36,7 @@ public class DefaultVenueService implements VenueService {
             updateVenues(response);
         } catch (UnirestException e) {
             String apiURL = String.format(API_URL, apikey);
-            throw new ResourceAccessException(String.format(API_ACCESS_EXCEPTION_MESSAGE, apiURL));
+            throw new NotFoundException(String.format(API_ACCESS_EXCEPTION_MESSAGE, apiURL), e);
         }
     }
 

@@ -1,7 +1,6 @@
 package concerttours.jobs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import concerttours.service.VenueService;
 import de.hybris.platform.cronjob.enums.CronJobResult;
 import de.hybris.platform.cronjob.enums.CronJobStatus;
@@ -9,7 +8,8 @@ import de.hybris.platform.cronjob.model.CronJobModel;
 import de.hybris.platform.servicelayer.cronjob.AbstractJobPerformable;
 import de.hybris.platform.servicelayer.cronjob.PerformResult;
 import org.apache.log4j.Logger;
-import org.springframework.web.client.ResourceAccessException;
+
+import javax.ws.rs.NotFoundException;
 
 public class UpdateVenuesJob extends AbstractJobPerformable<CronJobModel> {
     private static final Logger LOGGER = Logger.getLogger(SendNewsJob.class);
@@ -25,7 +25,7 @@ public class UpdateVenuesJob extends AbstractJobPerformable<CronJobModel> {
         } catch (JsonProcessingException e) {
             LOGGER.error("Unable to update venues", e);
             return new PerformResult(CronJobResult.FAILURE, CronJobStatus.FINISHED);
-        } catch (ResourceAccessException e) {
+        } catch (NotFoundException e) {
             LOGGER.error(e.getMessage(), e);
             return new PerformResult(CronJobResult.FAILURE, CronJobStatus.FINISHED);
         }
