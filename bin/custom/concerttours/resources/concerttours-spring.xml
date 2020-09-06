@@ -73,6 +73,17 @@
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
 	  -->
 
+    <bean id="updateVenuesJob" class="concerttours.jobs.UpdateVenuesJob" parent="abstractJobPerformable">
+        <property name="venueService" ref="venueService" />
+    </bean>
+
+    <alias name="defaultVenueService" alias="venueService" />
+    <bean id="defaultVenueService" class="concerttours.service.impl.DefaultVenueService" >
+        <property name="configurationService" ref="configurationService" />
+        <property name="modelService" ref="modelService" />
+        <property name="venueDao" ref="venueDao" />
+    </bean>
+
     <alias name="defaultNewsService" alias="newsService" />
     <bean id="defaultNewsService" class="concerttours.service.impl.DefaultNewsService">
         <property name="newsDAO" ref="newsDAO" />
