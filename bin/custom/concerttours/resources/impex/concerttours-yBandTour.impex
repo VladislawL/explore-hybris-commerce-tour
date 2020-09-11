@@ -15,9 +15,12 @@ INSERT_UPDATE Catalog; id[unique = true]
 INSERT_UPDATE CatalogVersion; catalog(id)[unique = true]; version[unique = true]; active; languages(isoCode); readPrincipals(uid)
                             ; $productCatalog           ; Online                ; true  ; en                ; employeegroup
 
+INSERT_UPDATE Producer; code[unique = true]; name ; surname
+                      ; A001               ; Vlad ; Logvin
+
 # Insert Products
-INSERT_UPDATE Product; code[unique = true]; name                  ; band(code); hashtag[lang = en]; hashtag[lang = de]; $supercategories; manufacturerName; manufacturerAID; unit(code); ean; variantType(code); $catalogVersion; $approved
-                     ; 201701             ; The Grand Little Tour ; A001      ; GrandLittle       ; GrossWenig        ;                 ; x               ; y              ; pieces    ;    ; Concert
+INSERT_UPDATE Product; code[unique = true]; name                  ; band(code); hashtag[lang = en]; hashtag[lang = de]; producer(code); $supercategories; manufacturerName; manufacturerAID; unit(code); ean; variantType(code); $catalogVersion; $approved
+                     ; 201701             ; The Grand Little Tour ; A001      ; GrandLittle       ; GrossWenig        ; A001          ;                 ; x               ; y              ; pieces    ;    ; Concert
 
 
 INSERT_UPDATE Venue; code[unique = true]; name[lang = en]       ; location         ; description

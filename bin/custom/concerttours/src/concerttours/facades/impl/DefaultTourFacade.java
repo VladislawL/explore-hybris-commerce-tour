@@ -1,5 +1,7 @@
 package concerttours.facades.impl;
+import concerttours.data.ProducerData;
 import concerttours.data.VenueData;
+import concerttours.model.ProducerModel;
 import concerttours.model.VenueModel;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.product.ProductService;
@@ -47,12 +49,14 @@ public class DefaultTourFacade implements TourFacade
                 }
             }
         }
+        ProducerData producerData = convertProducerModelToProducerData(product.getProducer());
         // Now we can create the TourData transfer object
         final TourData tourData = new TourData();
         tourData.setId(product.getCode());
         tourData.setTourName(product.getName());
         tourData.setDescription(product.getDescription());
         tourData.setConcerts(concerts);
+        tourData.setProducer(producerData);
         return tourData;
     }
     @Required
@@ -71,5 +75,16 @@ public class DefaultTourFacade implements TourFacade
         venueData.setDescription(venueModel.getDescription());
 
         return venueData;
+    }
+
+    private ProducerData convertProducerModelToProducerData(ProducerModel producerModel)
+    {
+        ProducerData producerData = new ProducerData();
+
+        producerData.setId(producerModel.getCode());
+        producerData.setName(producerModel.getName());
+        producerData.setSurname(producerModel.getSurname());
+
+        return producerData;
     }
 }

@@ -73,6 +73,10 @@
 	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
 	  -->
 
+    <bean id="defaultProducerService" class="concerttours.service.impl.DefaultProducerService">
+        <property name="producerDAO" ref="defaultProducerDAO" />
+    </bean>
+
     <bean id="updateVenuesJob" class="concerttours.jobs.UpdateVenuesJob" parent="abstractJobPerformable">
         <property name="venueService" ref="venueService" />
     </bean>
