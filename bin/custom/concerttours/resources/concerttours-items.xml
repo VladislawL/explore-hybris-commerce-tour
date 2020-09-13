@@ -166,6 +166,7 @@
 			<attributes>
 				<attribute qualifier="code" type="java.lang.String">
 					<persistence type="property" />
+					<modifiers optional="false" unique="true" />
 				</attribute>
 				<attribute qualifier="name" type="java.lang.String">
 					<persistence type="property" />
