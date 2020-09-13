@@ -46,6 +46,15 @@
 				<modifiers read="true" write="true" search="true" optional="true" />
 			</targetElement>
 		</relation>
+
+		<relation code="Producer2Tour" localized="false" autocreate="true">
+			<sourceElement qualifier="tours" type="Product" collectiontype="set" cardinality="many" ordered="false">
+				<modifiers read="true" write="true" search="true" optional="true" />
+			</sourceElement>
+			<targetElement qualifier="producer" type="Producer" cardinality="one">
+				<modifiers read="true" write="true" search="true" optional="true" />
+			</targetElement>
+		</relation>
 	</relations>
 
 	<itemtypes>
@@ -148,6 +157,22 @@
 					<defaultvalue>
 						concerttours.constraints.NotLoremIpsum.class
 					</defaultvalue>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Producer" generate="true" autocreate="true">
+			<deployment table="Producer" typecode="30280" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers optional="false" unique="true" />
+				</attribute>
+				<attribute qualifier="name" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="surname" type="java.lang.String">
+					<persistence type="property" />
 				</attribute>
 			</attributes>
 		</itemtype>
