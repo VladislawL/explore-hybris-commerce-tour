@@ -104,10 +104,22 @@
     </bean>
     <bean id="bandAlbumSalesEventListener" class="concerttours.events.BandAlbumSalesEventListener" parent="abstractEventListener" >
         <property name="modelService" ref="modelService" />
+        <property name="catalogVersionService" ref="catalogVersionService" />
+        <property name="keyGenerator" ref="newsIdGenerator" />
+    </bean>
+
+    <bean id="newsIdGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+        <property name="key" value="${keygen.news.id.name}"/>
+        <property name="digits" value="${keygen.news.id.digits}"/>
+        <property name="start" value="${keygen.news.id.start}"/>
+        <property name="type" value="${keygen.news.id.type}"/>
+        <property name="template" value="${keygen.news.id.template}"/>
     </bean>
 
     <bean id="concerttourEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
         <property name="modelService" ref="modelService" />
+        <property name="keyGenerator" ref="newsIdGenerator" />
+        <property name="catalogVersionService" ref="catalogVersionService" />
     </bean>
 
     <bean id="concertDaysUntilAttributeHandler" class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
